@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LaxTracker - Lacrosse Time & Stats</title>
+    <meta name="theme-color" content="#0d6efd">
+    <link rel="manifest" href="manifest.json">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-light">
+    <div class="container py-4">
+        <!-- Header -->
+        <header class="bg-primary text-white rounded-3 p-4 mb-4 shadow">
+            <div class="d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">LaxTracker</h1>
+                <div class="text-end">
+                    <div class="fw-bold">Period: <span id="period" class="badge bg-light text-dark">1</span></div>
+                    <div class="fw-bold">Clock: <span id="game-clock" class="badge bg-light text-dark">12:00</span></div>
+                </div>
+            </div>
+            
+            <!-- Score Display -->
+            <div class="d-flex justify-content-around mt-3">
+                <div class="text-center">
+                    <h3 id="home-team" class="mb-1">Home</h3>
+                    <div id="home-score" class="display-4 fw-bold">0</div>
+                </div>
+                <div class="text-center align-self-center">
+                    <div class="fs-1">-</div>
+                </div>
+                <div class="text-center">
+                    <h3 id="away-team" class="mb-1">Away</h3>
+                    <div id="away-score" class="display-4 fw-bold">0</div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Game Controls -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Game Controls</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                            <button id="start-stop" class="btn btn-success btn-lg me-md-2">
+                                <i class="bi bi-play-fill"></i> Start
+                            </button>
+                            <button id="reset-period" class="btn btn-warning btn-lg me-md-2">
+                                <i class="bi bi-arrow-counterclockwise"></i> Reset Period
+                            </button>
+                            <button id="home-score-btn" class="btn btn-primary btn-lg me-md-2">
+                                <i class="bi bi-plus-circle"></i> Home Goal
+                            </button>
+                            <button id="away-score-btn" class="btn btn-danger btn-lg">
+                                <i class="bi bi-plus-circle"></i> Away Goal
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Global Penalty Tracker -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0">
+                            <i class="bi bi-exclamation-triangle"></i> Active Penalties
+                            <span id="active-penalty-count" class="badge bg-light text-danger ms-2">0</span>
+                        </h5>
+                    </div>
+                    <div class="card-body p-0">
+                        <div id="global-penalty-list" class="list-group list-group-flush">
+                            <!-- Empty state -->
+                            <div id="no-active-penalties" class="list-group-item text-center py-4 text-muted">
+                                No active penalties
+                            </div>
+                            <!-- Active penalties will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Player Stats Section -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="card-header bg-white">
+                        <h5 class="mb-0">Player Statistics</h5>
+                    </div>
+                    <div class="card-body">
+                        <!-- Player Selection -->
+                        <div class="row mb-3">
+                            <div class="col-md-8">
+                                <select id="player-select" class="form-select">
+                                    <option value="">-- Select Player --</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 mt-2 mt-md-0">
+                                <button id="add-player" class="btn btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#addPlayerModal">
+                                    <i class="bi bi-plus-lg"></i> Add Player
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Form (shown when player selected) -->
+                        <div id="player-form" class="d-none">
+                            <div class="border-bottom pb-2 mb-3">
+                                <h4 id="player-name-display" class="mb-0"></h4>
+                            </div>
+                            <!-- Active Penalties Display -->
+                            <div id="active-penalties-container" class="mb-3 d-none">
+                                <h6 class="text-danger">Active Penalties</h6>
+                                <ul id="active-penalties-list" class="list-group">
+                                    <!-- Active penalties will appear here -->
+                                </ul>
+                            </div>
+                            <!-- Stat Buttons -->
+                            <div class="row g-3">
+                                <!-- Offensive Stats -->
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-success bg-opacity-10">
+                                            <h6 class="mb-0">Offensive Stats</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="stat-btn btn btn-outline-success" data-stat="goals">
+                                                    <i class="bi bi-bullseye"></i> Goal
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-success" data-stat="assists">
+                                                    <i class="bi bi-send"></i> Assist
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-success" data-stat="shots">
+                                                    <i class="bi bi-bullseye"></i> Shot
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-success" data-stat="shotsOnGoal">
+                                                    <i class="bi bi-bullseye"></i> Shot on Goal
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Defensive Stats -->
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-primary bg-opacity-10">
+                                            <h6 class="mb-0">Defensive Stats</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="stat-btn btn btn-outline-primary" data-stat="groundBalls">
+                                                    <i class="bi bi-circle"></i> Ground Ball
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-primary" data-stat="turnovers">
+                                                    <i class="bi bi-arrow-left-right"></i> Turnover
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-primary" data-stat="causedTurnovers">
+                                                    <i class="bi bi-shield"></i> Caused Turnover
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Goalie Stats -->
+                                <div class="col-md-6 goalie-stats d-none">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-info bg-opacity-10">
+                                            <h6 class="mb-0">Goalie Stats</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="stat-btn btn btn-outline-info" data-stat="saves">
+                                                    <i class="bi bi-hand-thumbs-up"></i> Save
+                                                </button>
+                                                <button class="stat-btn btn btn-outline-info" data-stat="goalsAllowed">
+                                                    <i class="bi bi-hand-thumbs-down"></i> Goal Allowed
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Penalties -->
+                                <div class="col-md-6">
+                                    <div class="card h-100">
+                                        <div class="card-header bg-danger bg-opacity-10">
+                                            <h6 class="mb-0">Penalties</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="d-grid gap-2">
+                                                <button class="stat-btn btn btn-outline-danger" data-stat="penalties">
+                                                    <i class="bi bi-exclamation-triangle"></i> Add Penalty
+                                                </button>
+                                                <div id="penalty-time" class="d-none mt-2">
+                                                    <label class="form-label">Penalty Time (seconds):</label>
+                                                    <input type="number" id="penalty-seconds" class="form-control" value="30" min="0">
+                                                    <button id="confirm-penalty" class="btn btn-danger btn-sm mt-2 w-100">
+                                                        Confirm Penalty
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Stats Display -->
+                            <div class="card mt-3">
+                                <div class="card-header bg-light">
+                                    <h6 class="mb-0">Current Stats</h6>
+                                </div>
+                                <div class="card-body">
+                                    <ul id="player-stats-list" class="list-group list-group-flush">
+                                        <!-- Stats will appear here -->
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Player Modal -->
+    <div class="modal fade" id="addPlayerModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Player</h5>
+                    <button type="button" class="btn-close close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="new-player-form">
+                        <div class="mb-3">
+                            <label for="player-number" class="form-label">Number</label>
+                            <input type="number" class="form-control" id="player-number" required min="1" max="99">
+                        </div>
+                        <div class="mb-3">
+                            <label for="player-first-name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="player-first-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="player-last-name" class="form-label">Last Name</label>
+                            <input type="text" class="form-control" id="player-last-name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="player-position" class="form-label">Position</label>
+                            <select class="form-select" id="player-position" required>
+                                <option value="attack">Attack</option>
+                                <option value="midfield">Midfield</option>
+                                <option value="defense">Defense</option>
+                                <option value="goalie">Goalie</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" form="new-player-form" class="btn btn-primary">Add Player</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <!-- App JS -->
+    <script src="app.js"></script>
+</body>
+</html>
