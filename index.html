@@ -30,29 +30,29 @@
       </div>
     </div>
     
-    <!-- Controls -->
-    <div class=" bg-light border-top d-flex justify-content-around py-2">
-      
+    <!-- Wrap controls in a scrollable div on small screens -->
+    <div class="bg-light border-top py-2 d-flex flex-wrap justify-content-center gap-2">
       <div class="btn-group" role="group">
-        <button class="btn btn-primary" @click="homeScore++"><i class="bi bi-plus-circle"></i> Goal</button>
-        <button class="btn btn-primary" @click="homeTO++"><i class="bi bi-plus-circle"></i> TimeOuts</button>
-        <button class="btn btn-primary" @click="homeTO--"><i class="bi bi-dash-circle"></i> TimeOuts</button>
+        <button class="btn btn-primary btn-sm" @click="homeScore++"><i class="bi bi-plus-circle"></i> Goal</button>
+        <button class="btn btn-primary btn-sm" @click="homeTO++"><i class="bi bi-plus-circle"></i> TO+</button>
+        <button class="btn btn-primary btn-sm" @click="homeTO--"><i class="bi bi-dash-circle"></i> TO-</button>
       </div>
       <div class="btn-group" role="group">
-        <button class="btn btn-success" @click="startClock"><i class="bi bi-play-fill"></i> Start</button>
-        <button class="btn btn-danger" @click="stopClock"><i class="bi bi-stop-fill"></i> Stop</button>
+        <button class="btn btn-success btn-sm" @click="startClock"><i class="bi bi-play-fill"></i> Start</button>
+        <button class="btn btn-danger btn-sm" @click="stopClock"><i class="bi bi-stop-fill"></i> Stop</button>
       </div>
-      <button class="btn btn-outline-dark" @click="exportStats"><i class="bi bi-download"></i> Export</button>
+      <button class="btn btn-outline-dark btn-sm" @click="exportStats"><i class="bi bi-download"></i> Export</button>
       <div class="btn-group" role="group">
-        <button class="btn btn-dark" @click="period++"><i class="bi bi-plus-circle"></i> Quarter</button>
-        <button class="btn btn-dark" @click="period--"><i class="bi bi-dash-circle"></i> Quarter</button>
+        <button class="btn btn-dark btn-sm" @click="period++"><i class="bi bi-plus-circle"></i> Q+</button>
+        <button class="btn btn-dark btn-sm" @click="period--"><i class="bi bi-dash-circle"></i> Q-</button>
       </div>
       <div class="btn-group" role="group">
-        <button class="btn btn-secondary" @click="awayScore++"><i class="bi bi-plus-circle"></i> Goal</button>
-        <button class="btn btn-secondary" @click="awayTO++"><i class="bi bi-plus-circle"></i> TimeOuts</button>
-        <button class="btn btn-secondary" @click="awayTO--"><i class="bi bi-dash-circle"></i> TimeOuts</button>
+        <button class="btn btn-secondary btn-sm" @click="awayScore++"><i class="bi bi-plus-circle"></i> Goal</button>
+        <button class="btn btn-secondary btn-sm" @click="awayTO++"><i class="bi bi-plus-circle"></i> TO+</button>
+        <button class="btn btn-secondary btn-sm" @click="awayTO--"><i class="bi bi-dash-circle"></i> TO-</button>
       </div>
     </div>
+
 
     <!-- Active Penalties -->
     <div class="bg-warning text-dark text-center py-1" v-if="penalties.length">
@@ -64,7 +64,7 @@
 
     <!-- Player Buttons -->
     <div class="row mt-2">
-      <div class="col-3 mb-2" v-for="p in players" :key="p.number">
+      <div class="col-6 col-sm-4 col-md-3 mb-2" v-for="p in players" :key="p.number">
         <button class="btn btn-outline-primary w-100" @click="openPlayerModal(p)">#{{ p.number }} {{p.firstName}} {{p.lastName}}</button>
       </div>
     </div>
