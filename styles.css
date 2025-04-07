@@ -1,0 +1,306 @@
+/* Custom styles that override or enhance Bootstrap */
+body {
+    min-height: 100vh;
+    font-family: 'Roboto', sans-serif;
+}
+
+#game-clock, #period {
+    min-width: 3.5em;
+    display: inline-block;
+}
+
+/* Make stat buttons full width in mobile */
+@media (max-width: 768px) {
+    .stat-btn {
+        width: 100% !important;
+    }
+}
+
+/* Custom badge style for player stats */
+.player-stat-badge {
+    font-size: 0.9em;
+}
+
+/* Animation for score changes */
+@keyframes scoreChange {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.score-change {
+    animation: scoreChange 0.5s;
+}
+
+/* Penalty countdown styles */
+#active-penalties-container {
+    border-left: 4px solid #dc3545;
+    padding-left: 1rem;
+}
+
+#active-penalties-list .list-group-item {
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Flashing animation for expiring penalties */
+@keyframes flashWarning {
+    0% { background-color: rgba(220, 53, 69, 0.05); }
+    50% { background-color: rgba(220, 53, 69, 0.2); }
+    100% { background-color: rgba(220, 53, 69, 0.05); }
+}
+
+.penalty-expiring {
+    animation: flashWarning 1s infinite;
+}
+
+/* Global Penalty Tracker Styles */
+.penalty-player {
+    font-weight: 600;
+}
+
+.penalty-team-home {
+    border-left: 4px solid #0d6efd;
+}
+
+.penalty-team-away {
+    border-left: 4px solid #dc3545;
+}
+
+.penalty-time {
+    font-family: monospace;
+    font-size: 1.1em;
+}
+
+.penalty-item-expiring {
+    animation: flashWarning 1s infinite;
+    background-color: rgba(220, 53, 69, 0.05);
+}
+
+/* Add team management styles */
+.team-selector {
+    margin-bottom: 1rem;
+}
+
+.team-tab {
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem 0.25rem 0 0;
+    border: 1px solid #dee2e6;
+    border-bottom: none;
+}
+
+.team-tab.active {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #0d6efd;
+}
+
+/* App header enhancements */
+.app-header {
+    background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Card and button enhancements */
+.card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition: all 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn {
+    border-radius: 0.35rem;
+}
+
+/* Mobile enhancements */
+@media (max-width: 576px) {
+    .container {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+    
+    .card-body {
+        padding: 0.75rem;
+    }
+    
+    h1 {
+        font-size: 1.75rem;
+    }
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Install button styles */
+#install-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 999;
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Period progress bar */
+.period-progress {
+    height: 5px;
+    margin-top: 8px;
+}
+
+/* Toast notifications */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1100;
+}
+
+/* Progress bar styles */
+.penalty-progress {
+    height: 6px;
+    margin-top: 5px;
+    border-radius: 3px;
+    overflow: hidden;
+    background-color: #e9ecef;
+}
+
+.penalty-progress-bar {
+    height: 100%;
+    background-color: #dc3545;
+    transition: width 1s linear;
+}
+
+.penalty-item-expiring .penalty-progress-bar {
+    background-color: #ffc107;
+    animation: pulseWarning 1s infinite;
+}
+
+@keyframes pulseWarning {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Player Pills */
+.player-pill {
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.player-pill:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.player-pill.active {
+    border: 2px solid var(--bs-primary);
+    box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.25);
+}
+
+/* Stats display */
+.player-stats-container {
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+    padding: 1rem;
+}
+
+/* Tab styling */
+.nav-tabs .nav-link {
+    padding: 0.75rem 1.25rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .player-pill {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.5rem;
+    }
+}
+
+/* Penalty button styles */
+.penalty-btn {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+}
+
+.penalty-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.penalty-btn:active {
+    transform: translateY(0);
+}
+
+.penalty-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+}
+
+.penalty-btn:hover::after {
+    transform: translateX(0);
+}
+
+/* Custom penalty input */
+#custom-penalty-input {
+    transition: all 0.3s ease;
+}
+
+/* Toast notifications */
+.toast {
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+body.modal-open {
+    overflow: hidden;
+    padding-right: 0 !important;
+}
+
+/* Fix modal overlay issues */
+.modal {
+    display: block !important; /* Important for fade animation */
+    opacity: 0;
+    pointer-events: none;
+    z-index: 1060 !important;
+}
+
+.modal.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050 !important;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+}
+
+.modal-backdrop.fade {
+    opacity: 0;
+}
+
+.modal-backdrop.show {
+    opacity: 0.5;
+}
